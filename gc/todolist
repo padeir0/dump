@@ -1,0 +1,7 @@
+[x] Freelist allocator
+[ ] Mark-Sweep Garbage Collector
+[ ] Reference Counting
+[ ] Mark-Sweep with Partitioned Heap
+[ ] Mark-compact Garbage Collector
+[ ] Copying Collector
+[ ] Hybrid Reference-Counting-Mark-Compact Garbage Collector (for fun)
