@@ -159,7 +159,7 @@ eval_ret:
 ;
 ; Implements a second level of precedence for * and /
 ; Equivalent to:
-;	Mult = Term {("-" | "+") Term}.
+;	Mult = Term {("*" | "/") Term}.
 mult:
 	push 	rbp
 	mov	rbp, rsp

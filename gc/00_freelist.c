@@ -198,6 +198,7 @@ void Free(Obj o) {
 
 	Node prev = NIL;
 	Node curr = head;
+	// this is going to fail on a full heap
 	while (curr != NIL) {
 		if (new < curr) {
 			insertNode(prev, curr, new);
