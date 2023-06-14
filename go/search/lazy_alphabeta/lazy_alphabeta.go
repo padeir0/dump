@@ -9,7 +9,7 @@ import (
 func Run(breadth, depth int, eval Evaluator) {
 	fmt.Println("Lazy Alpha-Beta ------")
 	start := time.Now()
-	startNode := genNode()
+	startNode := &Node{}
 
 	outcome := AlphaBeta(startNode, breadth, depth, minusInf, plusInf, true, eval)
 
@@ -29,11 +29,11 @@ func AlphaBeta(n *Node, breadth, depth int, alpha, beta float64, IsMax bool, eva
 	if IsMax {
 		maxEval := minusInf
 		for i := 0; i < breadth; i++ {
-			leaf := genNode()
-			n.AddLeaf(leaf)
+			leaf := &Node{}
 
 			score := AlphaBeta(leaf, breadth, depth-1, alpha, beta, false, eval)
 			if score > maxEval {
+				n.AddLeaf(breadth, leaf)
 				maxEval = score
 			}
 			if score > alpha {
@@ -48,11 +48,11 @@ func AlphaBeta(n *Node, breadth, depth int, alpha, beta float64, IsMax bool, eva
 	}
 	minEval := plusInf
 	for i := 0; i < breadth; i++ {
-		leaf := genNode()
-		n.AddLeaf(leaf)
+		leaf := &Node{}
 
 		score := AlphaBeta(leaf, breadth, depth-1, alpha, beta, true, eval)
 		if score < minEval {
+			n.AddLeaf(breadth, leaf)
 			minEval = score
 		}
 		if score < beta {
@@ -64,8 +64,4 @@ func AlphaBeta(n *Node, breadth, depth int, alpha, beta float64, IsMax bool, eva
 	}
 	n.Score = minEval
 	return minEval
-}
-
-func genNode() *Node {
-	return &Node{Leaves: []*Node{}}
 }

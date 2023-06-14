@@ -38,18 +38,21 @@ func ident(size int) string {
 	return output
 }
 
-func (this *Node) AddLeaf(n *Node) {
+func (this *Node) AddLeaf(breadth int, n *Node) {
+	if this.Leaves == nil {
+		this.Leaves = make([]*Node, breadth/2)[:0]
+	}
 	this.Leaves = append(this.Leaves, n)
 }
 
 func MakeTree(breadth, depth int) *Node {
-	output := &Node{Leaves: []*Node{}}
+	output := &Node{Leaves: make([]*Node, breadth)}
 	if depth == 0 {
 		return output
 	}
 	for i := 0; i < breadth; i++ {
 		n := MakeTree(breadth, depth-1)
-		output.AddLeaf(n)
+		output.Leaves[i] = n
 	}
 	return output
 }

@@ -10,7 +10,7 @@ import (
 func Run(breadth, depth int, eval Evaluator) {
 	fmt.Println("Concurrent Lazy Alpha-Beta ------")
 	start := time.Now()
-	startNode := genNode()
+	startNode := &Node{}
 
 	outcome := ConcAlphaBeta(startNode, breadth, depth, true, eval)
 
@@ -30,15 +30,15 @@ func ConcAlphaBeta(n *Node, breadth, depth int, isMax bool, eval Evaluator) floa
 		return alphaBeta(n, breadth, depth, minusInf, plusInf, isMax, eval)
 	}
 	// if we have multiple, we set the alpha, then paralelize
-	leaf := genNode()
-	n.AddLeaf(leaf)
+	leaf := &Node{}
+	n.AddLeaf(breadth, leaf)
 	alpha := alphaBeta(leaf, breadth, depth-1, minusInf, plusInf, !isMax, eval)
 
 	var wg sync.WaitGroup
 	for i := 1; i < breadth; i++ {
 		wg.Add(1)
-		leaf := genNode()
-		n.AddLeaf(leaf)
+		leaf := &Node{}
+		n.AddLeaf(breadth, leaf)
 		go func() {
 			defer wg.Done()
 			alphaBeta(leaf, breadth, depth-1, alpha, plusInf, !isMax, eval)
@@ -79,11 +79,11 @@ func alphaBeta(n *Node, breadth, depth int, alpha, beta float64, IsMax bool, eva
 	if IsMax {
 		maxEval := minusInf
 		for i := 0; i < breadth; i++ {
-			leaf := genNode()
-			n.AddLeaf(leaf)
+			leaf := &Node{}
 
 			score := alphaBeta(leaf, breadth, depth-1, alpha, beta, false, eval)
 			if score > maxEval {
+				n.AddLeaf(breadth, leaf)
 				maxEval = score
 			}
 			if score > alpha {
@@ -98,11 +98,11 @@ func alphaBeta(n *Node, breadth, depth int, alpha, beta float64, IsMax bool, eva
 	}
 	minEval := plusInf
 	for i := 0; i < breadth; i++ {
-		leaf := genNode()
-		n.AddLeaf(leaf)
+		leaf := &Node{}
 
 		score := alphaBeta(leaf, breadth, depth-1, alpha, beta, true, eval)
 		if score < minEval {
+			n.AddLeaf(breadth, leaf)
 			minEval = score
 		}
 		if score < beta {
@@ -114,8 +114,4 @@ func alphaBeta(n *Node, breadth, depth int, alpha, beta float64, IsMax bool, eva
 	}
 	n.Score = minEval
 	return minEval
-}
-
-func genNode() *Node {
-	return &Node{Leaves: []*Node{}}
 }
