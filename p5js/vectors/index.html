@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <main>
+    </main>
+    <div>
+      <input type="range" min="-24" max="24" value="0" class="slider" id="xRotSlider">
+      <input type="range" min="-24" max="24" value="0" class="slider" id="yRotSlider">
+      <input type="range" min="-24" max="24" value="0" class="slider" id="zRotSlider">
+      <input type="button" value="reset" onclick="resetSliders();">
+    </div>
+    <div>
+      <input type="range" min="-300" max="300" value="0" class="slider" id="zoomSlider">
+      <input type="button" value="toggle planes" onclick="togglePlanes();">
+    </div>
+    <div>
+      <input type="button" value="nothing" onclick="setPainting('nothing');">
+    </div>
+    <div>
+      <input type="button" value="line" onclick="setPainting('line');">
+      <input type="button" value="circle" onclick="setPainting('circle');">
+      <input type="button" value="spiral" onclick="setPainting('spiral');">
+    <div>
+      <input type="button" value="plane(e1, e2)" onclick="setPainting('plane1');">
+      <input type="button" value="plane(e2, e3)" onclick="setPainting('plane2');">
+      <input type="button" value="plane(e1, e3)" onclick="setPainting('plane3');">
+    </div>
+    <div>
+      <input type="button" value="space" onclick="setPainting('space');">
+      <input type="button" value="sphere" onclick="setPainting('sphere');">
+    </div>
+    <script src="vectors.js"></script>
+  </body>
+</html>
