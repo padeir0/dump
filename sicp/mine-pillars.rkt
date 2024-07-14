@@ -1,0 +1,47 @@
+#lang sicp
+
+(define origin '(0 0))
+(define pillar-distance 64)
+
+(define (first tuple)
+  (car tuple))
+(define (second tuple)
+  (cadr tuple))
+(define (make-vec a b)
+  (cons a (cons b '())))
+(define (scale A f)
+  (make-vec (* (first A) f) (* (second A) f)))
+(define (add A B)
+  (make-vec (+ (first A) (first B)) (+ (second A) (second B))))
+(define (mag A)
+  (sqrt (+ (square (first A))
+           (square (second A)))))
+(define (unit-vec A)
+  (scale A (/ 1 (mag A))))
+(define (floor-vec A)
+  (make-vec (floor (first A)) (floor (second A))))
+
+(define (square x)
+  (* x x))
+
+(define (distance A B)
+  (sqrt (+ (square (- (first A) (first B)))
+           (square (- (second A) (second B))))))
+
+(define (display-line whatever)
+  (display whatever)
+  (display "\n"))
+
+(define (pillars-to house-pos)
+  (define total-pillars (ceiling (/ (distance origin house-pos) pillar-distance)))
+  (define direction (unit-vec house-pos))
+  (define (iter i)
+    (cond ((< i total-pillars)
+           (let ((pos (floor-vec (scale direction (* i pillar-distance)))))
+             (display (floor (distance origin pos)))
+             (display ": ")
+             (display-line pos))
+           (iter (+ i 1)))))
+  (iter 0))
+
+(pillars-to '(-900 300))
