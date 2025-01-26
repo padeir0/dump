@@ -1,0 +1,1 @@
+grep -Pho '\([a-zA-Z0-9_\-\?\+\*\/]*' ./*.rkt | sort | uniq | cut -d '(' -f 2 | column
