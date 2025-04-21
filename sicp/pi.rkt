@@ -15,4 +15,4 @@
   (cond ((= i n) (f i))
         (else (+ (f i) (sum f (+ i 1) n)))))
 
-(define pi (sum term 0 40))
+(define pi (sum term 0 90))

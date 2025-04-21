@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# compila o programa que você pediu
+gcc -Wall -Wextra -Werror -ansi -std=c99 "$1" -o "out123"
+# roda o programa
+./out123
+# exclui o binário gerado
+rm out123
